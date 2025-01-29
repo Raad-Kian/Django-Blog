@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+
+
+
+{% block content %}
+    {% if user.is_authenticated %}
+        <p>You are already logged in. <a href="{% url 'home' %}">Go back to the homepage</a>.</p>
+    {% else %}
+        <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Login</button>
+        </form>
+    {% endif %}
+{% endblock %}
+
+
+

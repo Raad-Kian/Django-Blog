@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Raad's Recommendations</title>
+    
+    {% load static %}
+    
+    <link rel="stylesheet" href="{% static 'posts/styles.css' %}">
+</head>
+<body>
+    <header>
+        <nav>
+            <div class="logo">Raad's Recommendations</div>
+            <ul class="nav-links">
+                <li><a href="{% url 'home' %}">Home</a></li>
+                <li><a href="{% url 'category_posts' 'Song' %}">Song</a></li>
+                <li><a href="{% url 'category_posts' 'Movie' %}">Movie</a></li>
+                <li><a href="{% url 'category_posts' 'Anime' %}">Anime</a></li>
+                <li><a href="{% url 'category_posts' 'Game' %}">Game</a></li>
+            </ul>
+             <div class="auth-links">
+            {% if user.is_authenticated %}
+                <span>Welcome, {{ user.username }}!</span>
+                <form method="post" action="{% url 'logout' %}" style="display: inline;">
+                    {% csrf_token %}
+                    <button type="submit" class="logout-btn">Logout</button>
+                </form>
+                <a href="{% url 'profile' %}">profile</a>
+            {% else %}
+                <a href="{% url 'login' %}">Login</a>
+                <a href="{% url 'register' %}">Register</a>
+            {% endif %}
+        </div>
+            <div class="search-bar">
+                <form action="{% url 'search' %}" method="get">
+                    <input type="text" name="q" placeholder="Search..." aria-label="Search">
+                    <button type="submit">Search</button>
+                </form>
+            </div>
+        </nav>
+    </header>
+    <main>
+        {% block content %}{% endblock %}
+    </main>
+    <footer>
+        <p>Raad Kian</p>
+    </footer>
+</body>
+</html>

@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h1>{{ post.title }}</h1>
+    {% if post.image %}
+        <img src="{{ post.image.url }}" alt="{{ post.title }}" class="post-image">
+        {% endif %}
+<p>{{ post.creator }} | {{ post.genre }} | {{ post.release_date }}</p>
+<p>{{ post.content }}</p>
+
+<h2>Comments</h2>
+{% for comment in comments %}
+<div class="comment">
+    <p><strong>{{ comment.user.username }}</strong> - {{ comment.created_at }}</p>
+    <p>{{ comment.text }}</p>
+</div>
+{% endfor %}
+
+<form method="post" action="{% url 'post_detail' post.id %}">
+    {% csrf_token %}
+    <textarea name="text" placeholder="Leave a comment..." required></textarea>
+    <button type="submit">Submit</button>
+</form>
+{% endblock %}

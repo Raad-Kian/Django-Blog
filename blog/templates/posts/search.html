@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+{% block content %}
+    <div class="post-grid">
+    {% for post in posts %}
+    <a href="{% url 'post_detail' post.id %}" class="post-card">
+        {% if post.image %}
+        <img src="{{ post.image.url }}" alt="{{ post.title }}" class="post-image">
+        {% endif %}
+        <h2>{{ post.title }}</h2>
+        <p>{{ post.creator }} | {{ post.genre }} | {{ post.release_date }}</p>
+    </a>
+    {% endfor %}
+</div>
+    <div class="pagination">
+    <span class="step-links">
+        {% if posts.has_previous %}
+            <a href="?page=1">&laquo; First</a>
+            <a href="?page={{ posts.previous_page_number }}">Previous</a>
+        {% endif %}
+
+        <span class="current">
+            Page {{ posts.number }} of {{ posts.paginator.num_pages }}.
+        </span>
+
+        {% if posts.has_next %}
+            <a href="?page={{ posts.next_page_number }}">Next</a>
+            <a href="?page={{ posts.paginator.num_pages }}">Last &raquo;</a>
+        {% endif %}
+    </span>
+</div>
+{% endblock %}
